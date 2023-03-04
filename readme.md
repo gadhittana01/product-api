@@ -11,8 +11,10 @@ To run the service on your local machine, you must have these components install
 // install the dependency
 $ go get
 
-// create a database in postgres with name
-$ productDB
+// create a database in postgres with this specification
+$ name : productDB
+$ user : postgres
+$ pass : 
 
 // start a table migration 
 $ make db-init
