@@ -1,0 +1,42 @@
+version: '3'
+services:
+  PostgreSQL:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=mysecretpassword
+      - POSTGRES_HOST=postgres
+      - POSTGRES_DB=productDB
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  Redis:
+    image: redis:latest
+    ports:
+      - 6379:6379
+    healthcheck:
+      test: ["CMD", "redis-cli","ping"]
+  product-api:
+    image: product-api:latest
+    ports:
+      - 8000:8000
+    environment:
+      - DB_HOST=PostgreSQL
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=mysecretpassword
+      - DBName=productDB
+      - REDIS_HOST=Redis
+      - REDIS_PORT=6379
+    depends_on:
+      PostgreSQL:
+        condition: service_healthy
+      Redis:
+        condition: service_healthy
+  
+      
+  

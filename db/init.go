@@ -21,8 +21,8 @@ func InitDB() *gorm.DB {
 	dbConn := config.DB
 
 	connString := fmt.Sprintf(
-		"host=%s port=%d user=%s dbname=%s sslmode=disable",
-		dbConn.Host, dbConn.Port, dbConn.User, dbConn.Name,
+		"host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
+		dbConn.Host, dbConn.Port, dbConn.User, dbConn.Password, dbConn.Name,
 	)
 
 	db, err := gorm.Open("postgres", connString)
